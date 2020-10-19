@@ -1,28 +1,25 @@
-import React from 'react'
-class CageCommentForm extends React.Component {
+import React, {useState} from 'react'
 
-    state = {
-        input: ""
-    }
+function CageCommentForm (props) {
 
-    handleChange = (event) => this.setState({ input: event.target.value })
+    const [input, setInput ] = useState("")
 
-    handleSubmit = (event) => {
+    const handleChange = (event) => setInput( event.target.value )
+
+    const handleSubmit = (event) => {
         event.preventDefault()
-        this.props.createCageComment(this.state.input)
-        this.setState({input: ""})
+        props.createCageComment(input)
+        setInput( "" )
         event.target.reset()
     }
 
-    render(){
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <label>create a cage comment</label>
-                <input type="text" onChange={this.handleChange} placeholder="enter a cage comment"></input>
-                <input type="submit"></input>
-            </form>
-        )
-    }
+    return (
+        <form onSubmit={handleSubmit}>
+            <label>create a cage comment</label>
+            <input type="text" onChange={handleChange} placeholder="enter a cage comment"></input>
+            <input type="submit"></input>
+        </form>
+    )
 }
 
 export default CageCommentForm

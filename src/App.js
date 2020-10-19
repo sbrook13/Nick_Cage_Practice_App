@@ -1,44 +1,38 @@
-import React from 'react';
+import React, {useState} from 'react';
 import CageCommentForm from './Components/CageCommentForm'
 import CageCommentContainer from './Components/CageCommentContainer'
 import './App.css';
 
 
-class App extends React.Component {
+function App () {
   
-  state = {
-    showNickCage: false,
-    cageComments: [],
+  const [ showNickCage, setVisibility ] = useState(false)
+  const [ cageComments, addComment ] = useState([])
+
+  const createCageComment = ( newComment ) => {
+    addComment( [...cageComments, newComment] )
   }
 
-  handleClick = () => {
-    this.setState({showNickCage: !this.state.showNickCage})
-  }
+  
+  return (
+    <div className="App">
+      <h1>Show The Cage?</h1>
+      <button 
+        onClick={ () => setVisibility( !showNickCage ) }
+      >
+        { showNickCage ? 'Cage The Cage' : 'Show The Cage'}
+      </button>
+      {
+        ( showNickCage ?
+            <img  src="https://www.tvovermind.com/wp-content/uploads/2018/05/Cage-640x403.jpg" alt="cage-babbyyyyyyy"/> 
+            :''
+        )
+      }
+      <CageCommentForm createCageComment={ createCageComment }/>
+      <CageCommentContainer cageComments={cageComments}/>
+    </div>
+  )
 
-  createCageComment = ( newComment ) =>{
-    this.setState({ cageComments: [...this.state.cageComments, newComment] })
-  }
-
-  render(){
-    return (
-      <div className="App">
-        <h1>Show The Cage?</h1>
-        <button 
-          onClick={ this.handleClick }
-        >
-          { this.state.showNickCage ? 'Cage The Cage' : 'Show The Cage'}
-        </button>
-        {
-          ( this.state.showNickCage ?
-              <img  src="https://www.tvovermind.com/wp-content/uploads/2018/05/Cage-640x403.jpg" alt="cage-babbyyyyyyy"/> 
-              :''
-          )
-        }
-        <CageCommentForm createCageComment={ this.createCageComment }/>
-        <CageCommentContainer cageComments={this.state.cageComments}/>
-      </div>
-    )
-  }
 }
 
 export default App;
